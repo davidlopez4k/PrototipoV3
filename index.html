@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El círculo de la palabra — Cartilla del estudiante</title>
+<style>
+  :root{
+    --tinta:#1b2a3a; --suave:#5d6f80; --papel:#fffaf2; --tarjeta:#ffffff;
+    --azul:#1f4e79; --cielo:#2e9bd6; --menta:#1aa179; --sol:#f2a52c;
+    --coral:#e8604c; --uva:#7a4fc0; --rosa:#e0518e;
+    --verde:#2e9d4f; --amarillo:#e8a51b; --rojo:#d8453a;
+    --borde:#ece3d6; --sombra:0 6px 18px rgba(27,42,58,.10);
+    --acento:var(--cielo);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(circle at 12% 4%, #ffe9c9 0 22%, transparent 22.5%),
+      radial-gradient(circle at 92% 14%, #d7f1ff 0 16%, transparent 16.5%),
+      var(--papel);
+    background-attachment:fixed;
+    color:var(--tinta);
+    font-family:"Trebuchet MS","Segoe UI",system-ui,-apple-system,Verdana,sans-serif;
+    font-size:17.5px; line-height:1.62; -webkit-text-size-adjust:100%;
+  }
+  .envoltura{max-width:780px;margin:0 auto;padding:0 16px 56px}
+  header.tapa{
+    position:relative; overflow:hidden; text-align:center; color:#fff;
+    background:linear-gradient(135deg,#2e9bd6 0%,#7a4fc0 55%,#e0518e 100%);
+    padding:30px 16px 20px;
+  }
+  header.tapa .sello{
+    display:inline-block; background:rgba(255,255,255,.2); border:2px solid rgba(255,255,255,.65);
+    border-radius:999px; padding:5px 16px; font-size:12.5px; letter-spacing:.14em;
+    text-transform:uppercase; font-weight:bold; margin-bottom:12px;
+  }
+  header.tapa h1{
+    margin:0 0 8px; font-size:clamp(30px,8vw,46px); line-height:1.05;
+    letter-spacing:-.5px; text-shadow:0 3px 0 rgba(0,0,0,.14);
+  }
+  header.tapa p{margin:0 auto; max-width:460px; font-size:16px; opacity:.97}
+  .heroimg{display:block;margin:14px auto 0;max-width:330px;width:86%}
+  nav.menu{position:sticky;top:0;z-index:30;background:rgba(255,250,242,.97);
+    border-bottom:3px solid #f0e4d2}
+  nav.menu .fila{max-width:780px;margin:0 auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+  nav.menu button{
+    flex:0 0 auto;border:2px solid var(--borde);background:#fff;color:var(--suave);
+    border-radius:999px;padding:8px 15px;font-size:14.5px;font-family:inherit;font-weight:bold;
+    cursor:pointer;white-space:nowrap;transition:transform .12s}
+  nav.menu button:active{transform:scale(.95)}
+  nav.menu button[aria-current="true"]{background:var(--acento);color:#fff;border-color:var(--acento)}
+  section.pagina{display:none;padding-top:20px}
+  section.pagina.activa{display:block;animation:entra .28s ease}
+  @keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h2{font-size:clamp(24px,5.6vw,32px);margin:14px 0 10px;color:var(--acento);line-height:1.15}
+  h2 .emo{font-size:.95em;margin-right:6px}
+  h3{font-size:19px;margin:24px 0 8px;color:var(--tinta)}
+  p{margin:0 0 15px}
+  .ilustra{display:block;margin:4px auto 16px;max-width:300px;width:78%}
+  .tarjeta{background:var(--tarjeta);border:2px solid var(--borde);border-radius:18px;
+    padding:18px;margin:15px 0;box-shadow:var(--sombra)}
+  .destacado{background:linear-gradient(135deg,#eef7fd,#e6f3ff);border-color:#bfe0f4}
+  .ojo{background:linear-gradient(135deg,#fff5e2,#ffeccd);border-color:#f3d79b}
+  .menta{background:linear-gradient(135deg,#e8f8f1,#ddf3ea);border-color:#aedfcb}
+  ul,ol{margin:0 0 14px;padding-left:22px}
+  li{margin-bottom:8px}
+  .paso{display:flex;gap:13px;align-items:flex-start;margin-bottom:13px}
+  .num{flex:0 0 36px;height:36px;border-radius:50%;color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:16px;
+    box-shadow:0 3px 0 rgba(0,0,0,.12)}
+  .c1{background:var(--cielo)} .c2{background:var(--menta)} .c3{background:var(--sol)}
+  .c4{background:var(--coral)} .c5{background:var(--uva)} .c6{background:var(--rosa)}
+  .semaforo{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .luz{border:none;border-radius:20px;padding:20px 8px;font-family:inherit;font-size:16.5px;
+    font-weight:bold;color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.16);transition:transform .1s}
+  .luz:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.16)}
+  .luz.v{background:var(--verde)} .luz.a{background:var(--amarillo)} .luz.r{background:var(--rojo)}
+  .luz .icono{display:block;font-size:34px;line-height:1;margin-bottom:8px}
+  #explicaSemaforo{min-height:70px}
+  .acuerdo{display:flex;gap:12px;align-items:flex-start;padding:13px;border:2px solid var(--borde);
+    border-radius:14px;margin-bottom:11px;background:#fff;cursor:pointer;transition:transform .1s}
+  .acuerdo:active{transform:scale(.99)}
+  .acuerdo input{width:24px;height:24px;margin-top:2px;flex:0 0 auto;accent-color:var(--menta)}
+  .acuerdo.marcado{background:linear-gradient(135deg,#eafaf2,#e0f5ea);border-color:#9fdcc1}
+  .barra{height:14px;background:#f0e7da;border-radius:999px;overflow:hidden;margin:12px 0 4px;
+    border:2px solid var(--borde)}
+  .barra span{display:block;height:100%;width:0;border-radius:999px;
+    background:linear-gradient(90deg,var(--menta),var(--cielo));transition:width .3s}
+  .reloj{font-size:clamp(46px,13vw,66px);font-weight:bold;text-align:center;letter-spacing:.02em;
+    margin:8px 0 2px;font-variant-numeric:tabular-nums}
+  .botones{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  button.accion{background:var(--acento);color:#fff;border:none;border-radius:14px;
+    padding:13px 20px;font-size:15.5px;font-family:inherit;font-weight:bold;cursor:pointer;
+    box-shadow:0 4px 0 rgba(0,0,0,.15);transition:transform .1s}
+  button.accion:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.15)}
+  button.accion.sec{background:#fff;color:var(--acento);border:2px solid var(--acento);
+    box-shadow:0 4px 0 rgba(0,0,0,.08)}
+  label{display:block;font-weight:bold;margin:16px 0 6px;font-size:15.5px;color:var(--tinta)}
+  textarea,input[type=text]{width:100%;border:2px solid var(--borde);border-radius:14px;
+    padding:12px;font-family:inherit;font-size:16px;background:#fff;color:var(--tinta)}
+  textarea:focus,input[type=text]:focus{outline:none;border-color:var(--acento)}
+  textarea{min-height:78px;resize:vertical}
+  .subopc{font-size:14px;color:#6b7785;margin:10px 0 6px;font-weight:600}
+  .opciones.multi{flex-wrap:wrap}
+  .opciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .opcion{border:2px solid var(--borde);background:#fff;border-radius:999px;padding:11px 22px;
+    font-family:inherit;font-size:15.5px;font-weight:bold;cursor:pointer}
+  .opcion[aria-pressed="true"]{background:var(--acento);color:#fff;border-color:var(--acento)}
+  table{width:100%;border-collapse:separate;border-spacing:4px;font-size:14px;margin:10px 0}
+  th,td{border-radius:10px;padding:10px;text-align:left;vertical-align:top}
+  th{background:var(--acento);color:#fff;font-weight:bold}
+  td.eti{background:#f6efe4;font-weight:bold}
+  td.sel{background:#fff;border:2px solid var(--borde);cursor:pointer}
+  td.elegida{background:linear-gradient(135deg,var(--menta),#18b07f);color:#fff;
+    border-color:transparent;font-weight:bold}
+  .aviso{font-size:14.5px;color:var(--suave);margin-top:10px}
+  .cinta{display:inline-block;background:var(--sol);color:#fff;font-weight:bold;font-size:13px;
+    padding:4px 13px;border-radius:999px;margin-bottom:8px;letter-spacing:.03em}
+  @media print{nav.menu{display:none}section.pagina{display:block!important}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<header class="tapa">
+  <div class="sello">Cartilla del estudiante</div>
+  <h1>El círculo de la palabra</h1>
+  <p>Aquí todos hablamos, todos escuchamos y entre todos decidimos</p>
+  <svg class="heroimg" viewBox="0 0 320 180" aria-hidden="true">
+    <ellipse cx="160" cy="150" rx="118" ry="20" fill="rgba(255,255,255,.16)"/>
+    <g>
+      <path d="M38 158a22 22 0 0 1 44 0z" fill="#ffffff"/><circle cx="60" cy="118" r="16" fill="#ffd9a0"/>
+      <path d="M88 142a22 22 0 0 1 44 0z" fill="#ffe9a8"/><circle cx="110" cy="102" r="16" fill="#f8c08c"/>
+      <path d="M138 134a22 22 0 0 1 44 0z" fill="#bdf0dd"/><circle cx="160" cy="94" r="16" fill="#e8b182"/>
+      <path d="M188 142a22 22 0 0 1 44 0z" fill="#ffc9dd"/><circle cx="210" cy="102" r="16" fill="#ffd9a0"/>
+      <path d="M238 158a22 22 0 0 1 44 0z" fill="#ffffff"/><circle cx="260" cy="118" r="16" fill="#d99a70"/>
+    </g>
+    <g fill="#ffffff">
+      <path d="M118 44h46a10 10 0 0 1 10 10v20a10 10 0 0 1-10 10h-24l-12 12v-12h-10a10 10 0 0 1-10-10V54a10 10 0 0 1 10-10z" opacity=".95"/>
+      <path d="M196 20h38a9 9 0 0 1 9 9v16a9 9 0 0 1-9 9h-20l-10 10V54h-8a9 9 0 0 1-9-9V29a9 9 0 0 1 9-9z" opacity=".75"/>
+    </g>
+    <g fill="#2e9bd6"><circle cx="132" cy="64" r="4"/><circle cx="144" cy="64" r="4"/><circle cx="156" cy="64" r="4"/></g>
+    <g fill="#7a4fc0"><circle cx="210" cy="37" r="3.5"/><circle cx="221" cy="37" r="3.5"/></g>
+  </svg>
+</header>
+
+<nav class="menu" aria-label="Secciones"><div class="fila" id="menu"></div></nav>
+
+<div class="envoltura">
+
+<section class="pagina activa" id="p-inicio" data-color="var(--cielo)">
+  <h2><span class="emo">★</span>¿De qué se trata?</h2>
+  <p>Una vez por semana vamos a mover las sillas, hacer un círculo y conversar sobre un texto. No es una clase normal y tampoco es un recreo: es un espacio con reglas donde lo que tú piensas importa.</p>
+  <div class="tarjeta destacado">
+    <span class="cinta">Lo primero que tienes que saber</span>
+    <p style="margin:0;font-size:19px">Aquí no hay respuestas equivocadas. Nadie va a calificarte por lo que digas en el círculo. Lo único que se espera de ti es que cuentes qué te llamó la atención del texto y por qué.</p>
+  </div>
+  <h3>Cómo es una sesión</h3>
+  <div class="paso"><div class="num c1">1</div><div><strong>Armamos el círculo.</strong> Las sillas en redondo, sin mesas en la mitad. El profesor se sienta con nosotros, no al frente.</div></div>
+  <div class="paso"><div class="num c2">2</div><div><strong>Leemos nuestros acuerdos.</strong> Los lee quien modera esa semana. Siempre, aunque ya nos los sepamos.</div></div>
+  <div class="paso"><div class="num c3">3</div><div><strong>Leemos el texto.</strong> Por turnos y en voz alta. Si no quieres leer en voz alta, no lees: sigues en silencio.</div></div>
+  <div class="paso"><div class="num c4">4</div><div><strong>Marcamos un pedazo.</strong> Dos minutos en silencio para elegir la parte que más te movió algo.</div></div>
+  <div class="paso"><div class="num c5">5</div><div><strong>La ronda.</strong> Te toca tu turno y puedes usarlo como prefieras: hablar, leer lo que escribiste, mostrar un dibujo o pedirle a quien modera que lea tu nota. También puedes pasar. Nadie habla dos veces antes de que a todos se les haya ofrecido el turno.</div></div>
+  <div class="paso"><div class="num c6">6</div><div><strong>Cerramos.</strong> Quien modera recoge en una frase lo que se dijo y llenamos el ticket de salida.</div></div>
+  <div class="tarjeta ojo">
+    <span class="cinta" style="background:var(--coral)">¿Y si me da pena hablar?</span>
+    <p style="margin:0">Es normal y le pasa a casi todo el mundo la primera vez. Por eso existe el turno: nadie te va a interrumpir ni te van a hacer preguntas sorpresa. Puedes leer tu pedazo y decir una sola frase. Con eso basta.</p>
+  </div>
+</section>
+
+<section class="pagina" id="p-acuerdos" data-color="var(--menta)">
+  <h2><span class="emo">✓</span>Nuestros acuerdos</h2>
+  <svg class="ilustra" viewBox="0 0 300 150" aria-hidden="true">
+    <rect x="46" y="14" width="178" height="124" rx="12" fill="#fff" stroke="#aedfcb" stroke-width="4"/>
+    <rect x="96" y="6" width="78" height="18" rx="9" fill="#1aa179"/>
+    <g stroke="#cfe8dd" stroke-width="6" stroke-linecap="round">
+      <path d="M70 52h110"/><path d="M70 72h130"/><path d="M70 92h96"/><path d="M70 112h74"/>
+    </g>
+    <g fill="#1aa179"><circle cx="60" cy="52" r="6"/><circle cx="60" cy="72" r="6"/><circle cx="60" cy="92" r="6"/></g>
+    <path d="M232 118l34-62 20 11-34 62-24 10z" fill="#f2a52c"/>
+    <path d="M228 139l10-4-6-3z" fill="#1b2a3a"/>
+  </svg>
+  <p>Estos seis acuerdos son el corazón del círculo. Los tres primeros vienen de arranque; los demás los escribe el curso y quedan en el cartel del salón. Marca cada uno a medida que lo vayas entendiendo.</p>
+  <div id="listaAcuerdos"></div>
+  <div class="barra"><span id="barraAcuerdos"></span></div>
+  <p class="aviso" id="contadorAcuerdos">0 de 6 marcados</p>
+  <div class="tarjeta menta">
+    <span class="cinta" style="background:var(--menta)">Ojo con esto</span>
+    <p style="margin:0">Un acuerdo no es una norma impuesta. La diferencia está en quién lo escribió. Estos los escribe el curso, los firma el curso y el curso puede cambiarlos si dejan de funcionar.</p>
+  </div>
+</section>
+
+<section class="pagina" id="p-semaforo" data-color="var(--sol)">
+  <h2><span class="emo">◉</span>El semáforo</h2>
+  <svg class="ilustra" style="max-width:150px" viewBox="0 0 120 220" aria-hidden="true">
+    <rect x="22" y="6" width="76" height="186" rx="22" fill="#2b3a4a"/>
+    <rect x="52" y="192" width="16" height="24" fill="#2b3a4a"/>
+    <circle cx="60" cy="52" r="23" fill="#2e9d4f"/>
+    <circle cx="60" cy="104" r="23" fill="#e8a51b"/>
+    <circle cx="60" cy="156" r="23" fill="#d8453a"/>
+    <circle cx="52" cy="44" r="7" fill="#ffffff" opacity=".35"/>
+  </svg>
+  <p>Vas a tener tres tarjetas: verde, amarilla y roja. En cualquier momento de cualquier clase, el profesor dice «semáforo» y todos levantamos una al mismo tiempo. Toca una para recordar qué significa.</p>
+  <div class="semaforo">
+    <button class="luz v" data-luz="v"><span class="icono">●</span>Verde</button>
+    <button class="luz a" data-luz="a"><span class="icono">●</span>Amarilla</button>
+    <button class="luz r" data-luz="r"><span class="icono">●</span>Roja</button>
+  </div>
+  <div class="tarjeta" id="explicaSemaforo"><p style="margin:0;color:var(--suave)">Toca una tarjeta de color para ver qué significa.</p></div>
+  <div class="tarjeta destacado">
+    <span class="cinta" style="background:var(--cielo)">¿Por qué todos al tiempo?</span>
+    <p style="margin:0">Porque si levantamos de a uno, nadie quiere ser el primero en mostrar la roja. Al tiempo, nadie queda expuesto. Y algo importante: el semáforo no se califica y nadie anota quién levantó cuál.</p>
+  </div>
+</section>
+
+<section class="pagina" id="p-moderar" data-color="var(--uva)">
+  <h2><span class="emo">✋</span>Cuando me toque moderar</h2>
+  <svg class="ilustra" viewBox="0 0 300 150" aria-hidden="true">
+    <circle cx="80" cy="76" r="48" fill="#efe4ff"/>
+    <g transform="rotate(-28 80 76)">
+      <rect x="73" y="36" width="14" height="84" rx="7" fill="#ffd9a0" stroke="#7a4fc0" stroke-width="4"/>
+      <rect x="68" y="58" width="24" height="8" rx="4" fill="#7a4fc0"/>
+      <rect x="68" y="74" width="24" height="8" rx="4" fill="#e0518e"/>
+      <rect x="68" y="90" width="24" height="8" rx="4" fill="#1aa179"/>
+      <path d="M80 38c-16-10-13-32 0-36 13 4 16 26 0 36z" fill="#f2a52c" stroke="#7a4fc0" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M80 6v30" stroke="#7a4fc0" stroke-width="3" stroke-linecap="round"/>
+      <path d="M74 106c-8 5-11 12-9 19M86 106c8 5 11 12 9 19" stroke="#2e9bd6" stroke-width="4" stroke-linecap="round" fill="none"/>
+    </g>
+    <g>
+      <rect x="186" y="30" width="86" height="86" rx="20" fill="#fff" stroke="#7a4fc0" stroke-width="5"/>
+      <circle cx="229" cy="73" r="30" fill="#f6f1ff"/>
+      <path d="M229 53v22l15 9" stroke="#7a4fc0" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <rect x="218" y="16" width="22" height="12" rx="5" fill="#7a4fc0"/>
+    </g>
+  </svg>
+  <p>Cada semana modera una persona distinta y la lista se publica con anticipación, para que nadie se entere en el momento. Si prefieres hacerlo acompañado, puedes moderar en pareja. Cuando te toque, estas son tus tres funciones. Nada más y nada menos.</p>
+  <div class="tarjeta">
+    <div class="paso"><div class="num c5">1</div><div><strong>Doy la palabra.</strong> Nadie habla sin que yo le dé el turno. Ni siquiera el profesor. Quien tiene el tótem en la mano es quien tiene la palabra.</div></div>
+    <div class="paso"><div class="num c5">2</div><div><strong>Cuido los turnos.</strong> Le ofrezco el turno a cada persona antes de que alguien hable dos veces. Si alguien prefiere pasar, sigo adelante sin preguntar por qué.</div></div>
+    <div class="paso"><div class="num c5">3</div><div><strong>Cierro.</strong> Al final digo en una frase lo que me pareció que el grupo entendió hoy.</div></div>
+  </div>
+  <h3>Frases que me sirven</h3>
+  <div class="tarjeta destacado"><ul style="margin:0">
+    <li>«¿Alguien quiere responder a lo que acaba de decir?»</li>
+    <li>«Todavía no han hablado tres personas.»</li>
+    <li>«¿Quieres decirlo, leerlo o mostrarlo?»</li>
+    <li>«¿Alguien lo entendió distinto?»</li>
+    <li>«Si prefieres pasar, está bien. Seguimos.»</li>
+    <li>«Vamos a cerrar: ¿qué nos llevamos de hoy?»</li>
+  </ul></div>
+  <h3>Lo que no hago</h3>
+  <div class="tarjeta ojo"><ul style="margin:0">
+    <li>No corrijo a nadie. No soy el profesor.</li>
+    <li>No hablo de último para dar la conclusión correcta. Cierro recogiendo, no decidiendo.</li>
+    <li>No dejo que una sola persona se lleve toda la conversación, aunque esté diciendo cosas buenas.</li>
+  </ul></div>
+  <h3>Cronómetro de la ronda</h3>
+  <p>La ronda dura quince minutos y este cronómetro te avisa cuando quedan cinco.</p>
+  <div class="tarjeta">
+    <div class="reloj" id="reloj">15:00</div>
+    <p class="aviso" id="avisoReloj" style="text-align:center;min-height:22px"></p>
+    <div class="botones">
+      <button class="accion" id="btnIniciar">▶ Iniciar</button>
+      <button class="accion sec" id="btnPausar">❚❚ Pausar</button>
+      <button class="accion sec" id="btnReiniciar">↻ Reiniciar</button>
+    </div>
+  </div>
+</section>
+
+<section class="pagina" id="p-ticket" data-color="var(--coral)">
+  <h2><span class="emo">✎</span>Mi ticket de salida</h2>
+  <svg class="ilustra" viewBox="0 0 300 130" aria-hidden="true">
+    <path d="M24 22h252a0 0 0 0 1 0 0v26a17 17 0 0 0 0 34v26a0 0 0 0 1 0 0H24a0 0 0 0 1 0 0V82a17 17 0 0 0 0-34V22z"
+          fill="#fff" stroke="#e8604c" stroke-width="5"/>
+    <g stroke="#f7c9c2" stroke-width="6" stroke-linecap="round">
+      <path d="M52 50h110"/><path d="M52 70h140"/><path d="M52 90h86"/>
+    </g>
+    <circle cx="232" cy="65" r="22" fill="#ffe3de"/>
+    <path d="M222 65l7 8 14-16" stroke="#e8604c" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <p>Se llena al final de cada sesión y toma dos minutos. Las preguntas 1 y 2 las puedes responder como prefieras: escribiendo, haciendo un dibujo en el respaldo, o marcando una de las opciones. Todas valen igual. Puedes llenarlo aquí y descargarlo, o imprimirlo y entregarlo en papel.</p>
+  <div class="tarjeta">
+    <label for="fecha">Fecha</label>
+    <input type="text" id="fecha" placeholder="Día / mes / año">
+    <label for="nombre">Mi nombre (si quiero ponerlo)</label>
+    <input type="text" id="nombre" placeholder="Opcional">
+    <label for="entendi">1. Algo que entendí hoy (escríbelo, dibújalo o marca una opción)</label>
+    <textarea id="entendi"></textarea>
+    <div class="subopc">O marca la que se parezca más a lo que te pasó hoy</div>
+    <div class="opciones multi" id="op1"><button class="opcion" aria-pressed="false" data-v="Entendí de qué se trataba el texto.">Entendí de qué se trataba el texto.</button><button class="opcion" aria-pressed="false" data-v="Entendí algo que no había pensado antes.">Entendí algo que no había pensado antes.</button><button class="opcion" aria-pressed="false" data-v="Me quedó claro por qué alguien opinaba distinto.">Me quedó claro por qué alguien opinaba distinto.</button><button class="opcion" aria-pressed="false" data-v="Entendí poco, pero me interesó.">Entendí poco, pero me interesó.</button></div>
+    <label for="noclaro">2. Algo que todavía no me queda claro (escríbelo, dibújalo o marca una opción)</label>
+    <textarea id="noclaro"></textarea>
+    <div class="subopc">O marca la que se parezca más a lo que te pasó hoy</div>
+    <div class="opciones multi" id="op2"><button class="opcion" aria-pressed="false" data-v="No entendí una parte del texto.">No entendí una parte del texto.</button><button class="opcion" aria-pressed="false" data-v="No entendí algo que dijo un compañero.">No entendí algo que dijo un compañero.</button><button class="opcion" aria-pressed="false" data-v="No alcancé a decir lo que quería.">No alcancé a decir lo que quería.</button><button class="opcion" aria-pressed="false" data-v="Todo me quedó claro.">Todo me quedó claro.</button></div>
+    <label>3. ¿Hablaste hoy en el círculo?</label>
+    <div class="opciones" id="hableOpciones">
+      <button class="opcion" aria-pressed="false" data-v="Sí">Sí</button>
+      <button class="opcion" aria-pressed="false" data-v="No">No</button>
+    </div>
+    <div id="porque" style="display:none">
+      <label for="impidio">Si no hablaste, ¿qué te lo impidió?</label>
+      <textarea id="impidio"></textarea>
+    </div>
+    <div class="botones" style="margin-top:20px;justify-content:flex-start">
+      <button class="accion" id="btnDescargar">⬇ Descargar</button>
+      <button class="accion sec" id="btnImprimir">⎙ Imprimir</button>
+      <button class="accion sec" id="btnLimpiar">✕ Borrar</button>
+    </div>
+    <p class="aviso" id="avisoTicket"></p>
+  </div>
+  <div class="tarjeta ojo">
+    <span class="cinta" style="background:var(--coral)">¿Por qué la tercera pregunta?</span>
+    <p style="margin:0">Las dos primeras son sobre el texto y cada quien las responde como mejor le sirva: con palabras, con un dibujo o marcando. La tercera es sobre el círculo. Si muchos marcamos «no hablé», quiere decir que todavía no logramos que este sea un lugar seguro, y eso hay que arreglarlo entre todos.</p>
+  </div>
+</section>
+
+<section class="pagina" id="p-rubrica" data-color="var(--rosa)">
+  <h2><span class="emo">▲</span>¿Cómo vamos?</h2>
+  <svg class="ilustra" viewBox="0 0 300 140" aria-hidden="true">
+    <rect x="34" y="92" width="44" height="36" rx="8" fill="#ffd3e4"/>
+    <rect x="94" y="70" width="44" height="58" rx="8" fill="#f9b9d4"/>
+    <rect x="154" y="46" width="44" height="82" rx="8" fill="#ef8fbb"/>
+    <rect x="214" y="18" width="44" height="110" rx="8" fill="#e0518e"/>
+    <path d="M44 74l54-26 56-20 58-18" stroke="#7a4fc0" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="44" cy="74" r="7" fill="#7a4fc0"/><circle cx="236" cy="10" r="9" fill="#7a4fc0"/>
+  </svg>
+  <p>Esto no es una nota y no es individual: lo responde el curso entero, en voz alta, al final de la semana. Toca la casilla donde creas que estamos.</p>
+  <table id="rubrica">
+    <thead><tr><th>Criterio</th><th>En construcción</th><th>En camino</th><th>Logrado</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <p class="aviso" id="avisoRubrica">Nada marcado todavía.</p>
+  <div class="tarjeta menta">
+    <span class="cinta" style="background:var(--uva)">Para qué sirve</span>
+    <p style="margin:0">Lo que marquemos se anota en el cuaderno de acuerdos. En la cuarta semana comparamos las cuatro semanas: eso es la evaluación conversada. No mide cuánto sabe cada uno, mide cómo conversamos.</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var DATOS = {"portada": {"sello": "Cartilla del estudiante", "titulo": "El círculo de la palabra", "subtitulo": "Aquí todos hablamos, todos escuchamos y entre todos decidimos"}, "menu": ["★ Inicio", "✓ Acuerdos", "◉ Semáforo", "✋ Moderar", "✎ Ticket", "▲ ¿Cómo vamos?"], "inicio": {"titulo": "¿De qué se trata?", "intro": "Una vez por semana vamos a mover las sillas, hacer un círculo y conversar sobre un texto. No es una clase normal y tampoco es un recreo: es un espacio con reglas donde lo que tú piensas importa.", "cinta1": "Lo primero que tienes que saber", "destacado": "Aquí no hay respuestas equivocadas. Nadie va a calificarte por lo que digas en el círculo. Lo único que se espera de ti es que cuentes qué te llamó la atención del texto y por qué.", "h3": "Cómo es una sesión", "pasos": [["Armamos el círculo.", "Las sillas en redondo, sin mesas en la mitad. El profesor se sienta con nosotros, no al frente."], ["Leemos nuestros acuerdos.", "Los lee quien modera esa semana. Siempre, aunque ya nos los sepamos."], ["Leemos el texto.", "Por turnos y en voz alta. Si no quieres leer en voz alta, no lees: sigues en silencio."], ["Marcamos un pedazo.", "Dos minutos en silencio para elegir la parte que más te movió algo."], ["La ronda.", "Te toca tu turno y puedes usarlo como prefieras: hablar, leer lo que escribiste, mostrar un dibujo o pedirle a quien modera que lea tu nota. También puedes pasar. Nadie habla dos veces antes de que a todos se les haya ofrecido el turno."], ["Cerramos.", "Quien modera recoge en una frase lo que se dijo y llenamos el ticket de salida."]], "cinta2": "¿Y si me da pena hablar?", "ojo": "Es normal y le pasa a casi todo el mundo la primera vez. Por eso existe el turno: nadie te va a interrumpir ni te van a hacer preguntas sorpresa. Puedes leer tu pedazo y decir una sola frase. Con eso basta."}, "acuerdos": {"titulo": "Nuestros acuerdos", "intro": "Estos seis acuerdos son el corazón del círculo. Los tres primeros vienen de arranque; los demás los escribe el curso y quedan en el cartel del salón. Marca cada uno a medida que lo vayas entendiendo.", "lista": ["★  Aquí no hay respuestas equivocadas.", "↻  Nadie habla dos veces antes de que a todos se les haya ofrecido el turno. Pasar está permitido y no hay que explicar por qué.", "🔒  Lo que se dice en el círculo se respeta.", "👂  Escuchamos sin interrumpir, aunque no estemos de acuerdo.", "↺  Podemos cambiar de opinión: no es perder, es haber escuchado.", "🕐  Si alguien no quiere hablar hoy, está bien. Mañana puede ser."], "cinta": "Ojo con esto", "nota": "Un acuerdo no es una norma impuesta. La diferencia está en quién lo escribió. Estos los escribe el curso, los firma el curso y el curso puede cambiarlos si dejan de funcionar."}, "semaforo": {"titulo": "El semáforo", "intro": "Vas a tener tres tarjetas: verde, amarilla y roja. En cualquier momento de cualquier clase, el profesor dice «semáforo» y todos levantamos una al mismo tiempo. Toca una para recordar qué significa.", "pista": "Toca una tarjeta de color para ver qué significa.", "luces": [["Verde", "Verde — Voy bien", "Entendí lo que estamos viendo y podría explicárselo a un compañero con mis propias palabras."], ["Amarilla", "Amarilla — Más o menos", "Entendí una parte, pero me perdí en algo. Levantar la amarilla no es quedar mal: es avisar a tiempo."], ["Roja", "Roja — Me perdí", "Necesito que lo veamos otra vez. Si varios levantamos roja, el profesor cambia la explicación. Para eso sirve."]], "cinta": "¿Por qué todos al tiempo?", "nota": "Porque si levantamos de a uno, nadie quiere ser el primero en mostrar la roja. Al tiempo, nadie queda expuesto. Y algo importante: el semáforo no se califica y nadie anota quién levantó cuál."}, "moderar": {"titulo": "Cuando me toque moderar", "intro": "Cada semana modera una persona distinta y la lista se publica con anticipación, para que nadie se entere en el momento. Si prefieres hacerlo acompañado, puedes moderar en pareja. Cuando te toque, estas son tus tres funciones. Nada más y nada menos.", "funciones": [["Doy la palabra.", "Nadie habla sin que yo le dé el turno. Ni siquiera el profesor. Quien tiene el tótem en la mano es quien tiene la palabra."], ["Cuido los turnos.", "Le ofrezco el turno a cada persona antes de que alguien hable dos veces. Si alguien prefiere pasar, sigo adelante sin preguntar por qué."], ["Cierro.", "Al final digo en una frase lo que me pareció que el grupo entendió hoy."]], "h_frases": "Frases que me sirven", "frases": ["«¿Alguien quiere responder a lo que acaba de decir?»", "«Todavía no han hablado tres personas.»", "«¿Quieres decirlo, leerlo o mostrarlo?»", "«¿Alguien lo entendió distinto?»", "«Si prefieres pasar, está bien. Seguimos.»", "«Vamos a cerrar: ¿qué nos llevamos de hoy?»"], "h_nohago": "Lo que no hago", "nohago": ["No corrijo a nadie. No soy el profesor.", "No hablo de último para dar la conclusión correcta. Cierro recogiendo, no decidiendo.", "No dejo que una sola persona se lleve toda la conversación, aunque esté diciendo cosas buenas."], "h_crono": "Cronómetro de la ronda", "crono_texto": "La ronda dura quince minutos y este cronómetro te avisa cuando quedan cinco.", "minutos": "15", "aviso5": "Quedan cinco minutos o menos.", "aviso0": "Se acabó la ronda. Hora de cerrar."}, "ticket": {"titulo": "Mi ticket de salida", "intro": "Se llena al final de cada sesión y toma dos minutos. Las preguntas 1 y 2 las puedes responder como prefieras: escribiendo, haciendo un dibujo en el respaldo, o marcando una de las opciones. Todas valen igual. Puedes llenarlo aquí y descargarlo, o imprimirlo y entregarlo en papel.", "l_fecha": "Fecha", "l_nombre": "Mi nombre (si quiero ponerlo)", "l_p1": "1. Algo que entendí hoy (escríbelo, dibújalo o marca una opción)", "l_p2": "2. Algo que todavía no me queda claro (escríbelo, dibújalo o marca una opción)", "l_p3": "3. ¿Hablaste hoy en el círculo?", "l_p3b": "Si no hablaste, ¿qué te lo impidió?", "aviso_ok": "Listo: el ticket quedó en tus descargas.", "cinta": "¿Por qué la tercera pregunta?", "nota": "Las dos primeras son sobre el texto y cada quien las responde como mejor le sirva: con palabras, con un dibujo o marcando. La tercera es sobre el círculo. Si muchos marcamos «no hablé», quiere decir que todavía no logramos que este sea un lugar seguro, y eso hay que arreglarlo entre todos.", "h_opciones": "O marca la que se parezca más a lo que te pasó hoy", "opciones1": ["Entendí de qué se trataba el texto.", "Entendí algo que no había pensado antes.", "Me quedó claro por qué alguien opinaba distinto.", "Entendí poco, pero me interesó."], "opciones2": ["No entendí una parte del texto.", "No entendí algo que dijo un compañero.", "No alcancé a decir lo que quería.", "Todo me quedó claro."]}, "rubrica": {"titulo": "¿Cómo vamos?", "intro": "Esto no es una nota y no es individual: lo responde el curso entero, en voz alta, al final de la semana. Toca la casilla donde creas que estamos.", "encabezados": ["Criterio", "En construcción", "En camino", "Logrado"], "filas": [["Turnos", "Hablan siempre los mismos.", "La mayoría participa, pero algunos se quedan por fuera.", "Todos hablamos al menos una vez."], ["Escucha", "Nos interrumpimos.", "Esperamos el turno, pero sin recoger lo anterior.", "Alguien retoma lo que dijo otro."], ["Argumentación", "Opinamos sin decir por qué.", "Damos razones, pero no desde el texto.", "Señalamos el pedazo del texto que nos respalda."], ["Respeto a la diferencia", "Las opiniones distintas incomodan.", "Las aceptamos, pero no las exploramos.", "Preguntamos por qué el otro lo leyó distinto."]], "cinta": "Para qué sirve", "nota": "Lo que marquemos se anota en el cuaderno de acuerdos. En la cuarta semana comparamos las cuatro semanas: eso es la evaluación conversada. No mide cuánto sabe cada uno, mide cómo conversamos."}};
+
+  var PAGINAS = [
+    ["p-inicio",DATOS.menu[0]],["p-acuerdos",DATOS.menu[1]],["p-semaforo",DATOS.menu[2]],
+    ["p-moderar",DATOS.menu[3]],["p-ticket",DATOS.menu[4]],["p-rubrica",DATOS.menu[5]]
+  ];
+  var menu = document.getElementById("menu");
+  function pintaAcento(id){
+    var s = document.getElementById(id);
+    document.documentElement.style.setProperty("--acento", s.getAttribute("data-color") || "var(--cielo)");
+  }
+  PAGINAS.forEach(function(pg, i){
+    var b = document.createElement("button");
+    b.textContent = pg[1];
+    b.setAttribute("aria-current", i === 0 ? "true" : "false");
+    b.addEventListener("click", function(){
+      PAGINAS.forEach(function(p2){ document.getElementById(p2[0]).classList.remove("activa"); });
+      document.getElementById(pg[0]).classList.add("activa");
+      Array.prototype.forEach.call(menu.children, function(x){ x.setAttribute("aria-current","false"); });
+      b.setAttribute("aria-current","true");
+      pintaAcento(pg[0]);
+      window.scrollTo(0,0);
+    });
+    menu.appendChild(b);
+  });
+  pintaAcento("p-inicio");
+
+  var ACUERDOS = DATOS.acuerdos.lista;
+  var lista = document.getElementById("listaAcuerdos");
+  var marcados = 0;
+  ACUERDOS.forEach(function(txt, i){
+    var fila = document.createElement("label");
+    fila.className = "acuerdo";
+    var chk = document.createElement("input");
+    chk.type = "checkbox";
+    var span = document.createElement("span");
+    span.innerHTML = "<strong>" + (i+1) + ".</strong> " + txt;
+    fila.appendChild(chk); fila.appendChild(span);
+    chk.addEventListener("change", function(){
+      fila.classList.toggle("marcado", chk.checked);
+      marcados += chk.checked ? 1 : -1;
+      document.getElementById("barraAcuerdos").style.width = (marcados/ACUERDOS.length*100) + "%";
+      document.getElementById("contadorAcuerdos").textContent =
+        marcados + " de " + ACUERDOS.length + " marcados" +
+        (marcados === ACUERDOS.length ? "  ¡Los tienes todos!" : "");
+    });
+    lista.appendChild(fila);
+  });
+
+  var COLORES = {v:"#2e9d4f", a:"#c98b0f", r:"#d8453a"};
+  var CLAVES = ["v","a","r"];
+  Array.prototype.forEach.call(document.querySelectorAll(".luz"), function(b){
+    b.addEventListener("click", function(){
+      var k = b.getAttribute("data-luz");
+      var l = DATOS.semaforo.luces[CLAVES.indexOf(k)];
+      document.getElementById("explicaSemaforo").innerHTML =
+        '<h3 style="margin:0 0 6px;color:' + COLORES[k] + '">' + l[1] + '</h3><p style="margin:0">' + l[2] + '</p>';
+    });
+  });
+
+  function marcadas(id){
+    var c = document.getElementById(id);
+    if (!c) return "";
+    var r = [];
+    Array.prototype.forEach.call(c.children, function(b){
+      if (b.getAttribute("aria-pressed") === "true") r.push("   - " + b.getAttribute("data-v"));
+    });
+    return r.length ? r.join("\n") : "";
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".opciones.multi"), function(c){
+    Array.prototype.forEach.call(c.children, function(b){
+      b.addEventListener("click", function(){
+        b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true");
+      });
+    });
+  });
+
+  var total = parseInt(DATOS.moderar.minutos,10)*60, resto = total, id = null;
+  var reloj = document.getElementById("reloj");
+  var aviso = document.getElementById("avisoReloj");
+  function pinta(){
+    var m = Math.floor(resto/60), s = resto % 60;
+    reloj.textContent = (m<10?"0":"") + m + ":" + (s<10?"0":"") + s;
+    if (resto === 0) { aviso.textContent = DATOS.moderar.aviso0; reloj.style.color = "#d8453a"; }
+    else if (resto <= 300) { aviso.textContent = DATOS.moderar.aviso5; reloj.style.color = "#c98b0f"; }
+    else { aviso.textContent = ""; reloj.style.color = "#1b2a3a"; }
+  }
+  document.getElementById("btnIniciar").addEventListener("click", function(){
+    if (id) return;
+    id = setInterval(function(){ if (resto > 0) { resto--; pinta(); } else { clearInterval(id); id = null; } }, 1000);
+  });
+  document.getElementById("btnPausar").addEventListener("click", function(){
+    if (id) { clearInterval(id); id = null; }
+  });
+  document.getElementById("btnReiniciar").addEventListener("click", function(){
+    if (id) { clearInterval(id); id = null; }
+    resto = total; pinta();
+  });
+  pinta();
+
+  var hable = "";
+  Array.prototype.forEach.call(document.querySelectorAll("#hableOpciones .opcion"), function(b){
+    b.addEventListener("click", function(){
+      Array.prototype.forEach.call(document.querySelectorAll("#hableOpciones .opcion"), function(x){
+        x.setAttribute("aria-pressed","false");
+      });
+      b.setAttribute("aria-pressed","true");
+      hable = b.getAttribute("data-v");
+      document.getElementById("porque").style.display = (hable === "No") ? "block" : "none";
+    });
+  });
+  function val(id){ return (document.getElementById(id).value || "").trim(); }
+  document.getElementById("btnDescargar").addEventListener("click", function(){
+    var K = DATOS.ticket;
+    var t = [K.titulo.toUpperCase(), "",
+      K.l_fecha + ": " + (val("fecha") || "____"),
+      K.l_nombre + ": " + (val("nombre") || "(sin nombre)"), "",
+      K.l_p1 + ":", val("entendi") || "(sin respuesta)", "",
+      marcadas("op1"),
+      K.l_p2 + ":", val("noclaro") || "(sin respuesta)", "",
+      marcadas("op2"),
+      K.l_p3 + " " + (hable || "(sin responder)")];
+    if (hable === "No") t.push("   " + K.l_p3b + " " + (val("impidio") || "(sin respuesta)"));
+    var blob = new Blob([t.join("\n")], {type:"text/plain;charset=utf-8"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "ticket-de-salida.txt";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    document.getElementById("avisoTicket").textContent = K.aviso_ok;
+  });
+  document.getElementById("btnImprimir").addEventListener("click", function(){ window.print(); });
+  document.getElementById("btnLimpiar").addEventListener("click", function(){
+    ["fecha","nombre","entendi","noclaro","impidio"].forEach(function(x){ document.getElementById(x).value = ""; });
+    Array.prototype.forEach.call(document.querySelectorAll("#hableOpciones .opcion"), function(x){
+      x.setAttribute("aria-pressed","false");
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".opciones.multi .opcion"), function(x){
+      x.setAttribute("aria-pressed","false");
+    });
+    hable = ""; document.getElementById("porque").style.display = "none";
+    document.getElementById("avisoTicket").textContent = "";
+  });
+
+  var cuerpo = document.querySelector("#rubrica tbody");
+  DATOS.rubrica.filas.forEach(function(f){
+    var tr = document.createElement("tr");
+    var td0 = document.createElement("td");
+    td0.className = "eti"; td0.textContent = f[0];
+    tr.appendChild(td0);
+    for (var k = 1; k <= 3; k++) {
+      (function(k){
+        var td = document.createElement("td");
+        td.className = "sel"; td.textContent = f[k];
+        td.addEventListener("click", function(){
+          var ya = td.classList.contains("elegida");
+          Array.prototype.forEach.call(tr.querySelectorAll("td.sel"), function(x){ x.classList.remove("elegida"); });
+          if (!ya) { td.classList.add("elegida"); }
+          var n = cuerpo.querySelectorAll("td.elegida").length;
+          document.getElementById("avisoRubrica").textContent =
+            n === 0 ? "Nada marcado todavía." : n + " de " + DATOS.rubrica.filas.length + " criterios marcados.";
+        });
+        tr.appendChild(td);
+      })(k);
+    }
+    cuerpo.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>
